@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="SpinWheel — A stylish random picker wheel. Enter inputs, spin the wheel, and get a fair random result. Features weights, labels, colors, elimination &amp; accumulation modes.">
+    <title>SpinWheel — Random Picker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- BG -->
+    <div class="bg-glow bg-glow--1"></div>
+    <div class="bg-glow bg-glow--2"></div>
+
+    <!-- ═══════ HEADER ═══════ -->
+    <header class="header" id="header">
+        <div class="header-inner">
+            <div class="logo" id="logoBtn">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 40 40" fill="none">
+                        <circle cx="20" cy="20" r="18" stroke="url(#lg)" stroke-width="3" />
+                        <circle cx="20" cy="20" r="4" fill="url(#lg)" />
+                        <path d="M20 2v18" stroke="url(#lg)" stroke-width="2" />
+                        <path d="M20 20l12-10" stroke="url(#lg)" stroke-width="2" />
+                        <path d="M20 20l12 10" stroke="url(#lg)" stroke-width="2" />
+                        <path d="M20 20l-12 10" stroke="url(#lg)" stroke-width="2" />
+                        <path d="M20 20l-12-10" stroke="url(#lg)" stroke-width="2" />
+                        <defs>
+                            <linearGradient id="lg" x1="0" y1="0" x2="40" y2="40">
+                                <stop stop-color="#8B5CF6" />
+                                <stop offset="1" stop-color="#EC4899" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <span class="logo-text">SpinWheel</span>
+            </div>
+
+            <!-- Wheel Tabs -->
+            <div class="wheel-tabs" id="wheelTabs">
+                <button class="wheel-tab active" data-index="0">Wheel 1</button>
+                <button class="wheel-tab-add" id="btnAddWheel" title="New Wheel">+</button>
+            </div>
+
+            <nav class="header-actions">
+                <button class="btn-icon" id="btnFullscreen" title="Full Screen">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3" />
+                    </svg>
+                </button>
+                <button class="btn-icon" id="btnSettings" title="Settings">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M12.22 2h-.44a2 2 0 00-2 2v.18a2 2 0 01-1 1.73l-.43.25a2 2 0 01-2 0l-.15-.08a2 2 0 00-2.73.73l-.22.38a2 2 0 00.73 2.73l.15.1a2 2 0 011 1.72v.51a2 2 0 01-1 1.74l-.15.09a2 2 0 00-.73 2.73l.22.38a2 2 0 002.73.73l.15-.08a2 2 0 012 0l.43.25a2 2 0 011 1.73V20a2 2 0 002 2h.44a2 2 0 002-2v-.18a2 2 0 011-1.73l.43-.25a2 2 0 012 0l.15.08a2 2 0 002.73-.73l.22-.39a2 2 0 00-.73-2.73l-.15-.08a2 2 0 01-1-1.74v-.5a2 2 0 011-1.74l.15-.09a2 2 0 00.73-2.73l-.22-.38a2 2 0 00-2.73-.73l-.15.08a2 2 0 01-2 0l-.43-.25a2 2 0 01-1-1.73V4a2 2 0 00-2-2z" />
+                        <circle cx="12" cy="12" r="3" />
+                    </svg>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ═══════ MAIN ═══════ -->
+    <main class="main-content" id="mainContent">
+
+        <!-- ── LEFT: WHEEL ── -->
+        <section class="wheel-section" id="wheelSection">
+            <!-- Custom Title Area -->
+            <div class="wheel-title-area" id="wheelTitleArea">
+                <h1 class="wheel-title" id="wheelTitle">SpinWheel</h1>
+                <p class="wheel-desc" id="wheelDesc">Spin the wheel to pick a random result!</p>
+            </div>
+
+            <div class="wheel-stage">
+                <div class="wheel-container" id="wheelContainer">
+                    <!-- Pointer -->
+                    <div class="wheel-pointer" id="wheelPointer">
+                        <svg viewBox="0 0 40 50" fill="none">
+                            <path d="M20 50L2 18Q0 12 6 6 12 0 20 0 28 0 34 6 40 12 38 18Z" fill="url(#pg)" />
+                            <path d="M20 50L2 18Q0 12 6 6 12 0 20 0 28 0 34 6 40 12 38 18Z"
+                                stroke="rgba(255,255,255,0.25)" stroke-width="1" />
+                            <circle cx="20" cy="14" r="5" fill="rgba(255,255,255,0.9)" />
+                            <defs>
+                                <linearGradient id="pg" x1="0" y1="0" x2="0" y2="50">
+                                    <stop stop-color="#f43f5e" />
+                                    <stop offset="1" stop-color="#be123c" />
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+
+                    <canvas id="wheelCanvas" width="500" height="500"></canvas>
+
+                    <!-- Center Spin Button -->
+                    <button class="wheel-center-btn" id="btnSpin" title="Spin! (Ctrl+Enter)">
+                        <span class="spin-text" id="spinBtnText">SPIN</span>
+                    </button>
+                </div>
+
+                <!-- Spin Count -->
+                <div class="spin-counter" id="spinCounter">Spins: <strong>0</strong></div>
+            </div>
+        </section>
+
+        <!-- ── RIGHT: SIDEBAR ── -->
+        <aside class="sidebar" id="sidebar">
+            <!-- Sidebar Toggle Tabs -->
+            <div class="sidebar-tabs">
+                <button class="sidebar-tab active" data-panel="inputs" id="tabInputs">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" />
+                        <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" />
+                    </svg>
+                    Inputs
+                </button>
+                <button class="sidebar-tab" data-panel="results" id="tabResults">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 20V10" />
+                        <path d="M18 20V4" />
+                        <path d="M6 20v-4" />
+                    </svg>
+                    Results
+                </button>
+            </div>
+
+            <!-- ══ INPUTS PANEL ══ -->
+            <div class="sidebar-panel active" id="panelInputs">
+                <!-- Action Mode Selector -->
+                <div class="mode-selector">
+                    <label class="mode-label">Action Mode:</label>
+                    <div class="mode-buttons" id="modeButtons">
+                        <button class="mode-btn active" data-mode="normal" title="Result stays in wheel">
+                            <span class="mode-icon">✓</span> Normal
+                        </button>
+                        <button class="mode-btn" data-mode="elimination" title="Remove result from wheel">
+                            <span class="mode-icon">✕</span> Elimination
+                        </button>
+                        <button class="mode-btn" data-mode="accumulation" title="Count result occurrences">
+                            <span class="mode-icon">＋</span> Accumulation
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Enable toggles -->
+                <div class="input-toggles">
+                    <label class="mini-toggle" title="Enable weight per entry">
+                        <input type="checkbox" id="chkWeight"> <span>Weight</span>
+                    </label>
+                    <label class="mini-toggle" title="Enable label per entry (shown on wheel instead of name)">
+                        <input type="checkbox" id="chkLabel"> <span>Label</span>
+                    </label>
+                    <label class="mini-toggle" title="Enable custom color per entry">
+                        <input type="checkbox" id="chkColor"> <span>Color</span>
+                    </label>
+                </div>
+
+                <!-- Entries List (Main Mode) -->
+                <div class="entries-list-wrapper">
+                    <div class="entries-list" id="entriesList">
+                        <!-- entries rendered by JS -->
+                    </div>
+
+                    <!-- Add Entry Row -->
+                    <div class="add-entry-row">
+                        <input type="text" class="add-entry-input" id="addEntryInput" placeholder="Add new entry..."
+                            autocomplete="off">
+                        <button class="btn-add-entry" id="btnAddEntry" title="Add (Enter)">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5">
+                                <line x1="12" y1="5" x2="12" y2="19" />
+                                <line x1="5" y1="12" x2="19" y2="12" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Input toolbar -->
+                <div class="input-toolbar">
+                    <button class="toolbar-btn" id="btnShuffle" title="Shuffle">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polyline points="16 3 21 3 21 8" />
+                            <line x1="4" y1="20" x2="21" y2="3" />
+                            <polyline points="21 16 21 21 16 21" />
+                            <line x1="15" y1="15" x2="21" y2="21" />
+                            <line x1="4" y1="4" x2="9" y2="9" />
+                        </svg>
+                        <span>Shuffle</span>
+                    </button>
+                    <button class="toolbar-btn" id="btnSort" title="Sort A-Z">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M3 6h10" />
+                            <path d="M3 12h7" />
+                            <path d="M3 18h4" />
+                            <path d="M17 6v12" />
+                            <path d="M13 18l4 4 4-4" />
+                        </svg>
+                        <span>Sort</span>
+                    </button>
+                    <button class="toolbar-btn" id="btnMystery" title="Toggle Mystery Wheel">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3" />
+                            <line x1="12" y1="17" x2="12.01" y2="17" />
+                        </svg>
+                        <span>Mystery</span>
+                    </button>
+                    <button class="toolbar-btn" id="btnEditTitle" title="Edit Title">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M17 3a2.828 2.828 0 114 4L7.5 20.5 2 22l1.5-5.5L17 3z" />
+                        </svg>
+                        <span>Title</span>
+                    </button>
+                    <button class="toolbar-btn danger" id="btnClearAll" title="Clear All">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polyline points="3 6 5 6 21 6" />
+                            <path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2" />
+                        </svg>
+                        <span>Clear</span>
+                    </button>
+                </div>
+
+                <div class="entry-count-bar">
+                    <span id="entryCount">0 entries</span>
+                    <span id="totalWeight" class="weight-info" style="display:none;">Total weight: 0</span>
+                </div>
+            </div>
+
+            <!-- ══ RESULTS PANEL ══ -->
+            <div class="sidebar-panel" id="panelResults">
+                <div class="results-tabs">
+                    <button class="results-tab active" data-view="history" id="tabHistory">History</button>
+                    <button class="results-tab" data-view="scores" id="tabScores">Scores</button>
+                </div>
+
+                <!-- History View -->
+                <div class="results-view active" id="viewHistory">
+                    <ul class="history-list" id="historyList">
+                        <li class="history-empty">No results yet. Spin the wheel!</li>
+                    </ul>
+                </div>
+
+                <!-- Scores View -->
+                <div class="results-view" id="viewScores">
+                    <ul class="scores-list" id="scoresList">
+                        <li class="history-empty">No scores yet.</li>
+                    </ul>
+                </div>
+
+                <div class="results-actions">
+                    <button class="btn btn-ghost btn-sm" id="btnClearResults">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polyline points="3 6 5 6 21 6" />
+                            <path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2" />
+                        </svg>
+                        Clear Results
+                    </button>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <!-- ═══════ RESULT MODAL ═══════ -->
+    <div class="modal-overlay" id="resultModal">
+        <div class="result-card" id="resultCard">
+            <div class="confetti-container" id="confettiContainer"></div>
+            <span class="result-subtitle" id="resultSubtitle">🎉 Winner!</span>
+            <span class="result-name" id="resultName"></span>
+            <span class="result-label-text" id="resultLabelText"></span>
+            <div class="result-mode-info" id="resultModeInfo"></div>
+            <div class="result-actions">
+                <button class="btn btn-primary" id="btnActionMode">DONE</button>
+                <button class="btn btn-ghost" id="btnSpinAgain">Spin Again</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════ SETTINGS MODAL ═══════ -->
+    <div class="modal-overlay" id="settingsModal">
+        <div class="modal settings-modal">
+            <div class="modal-header">
+                <h2 class="modal-title">⚙️ Settings</h2>
+                <button class="btn-close" id="btnCloseSettings">✕</button>
+            </div>
+            <div class="modal-body">
+                <!-- Spin Behavior -->
+                <div class="settings-section">
+                    <h3 class="settings-section-title">Spin Behavior</h3>
+                    <div class="setting-row">
+                        <label>Spinning Speed</label>
+                        <div class="setting-control">
+                            <input type="range" id="setSpeed" min="1" max="10" value="5" class="range-input">
+                            <span class="range-val" id="valSpeed">Lv5</span>
+                        </div>
+                    </div>
+                    <div class="setting-row">
+                        <label>Spinning Duration</label>
+                        <div class="setting-control">
+                            <input type="range" id="setDuration" min="1" max="20" value="5" class="range-input">
+                            <span class="range-val" id="valDuration">5s</span>
+                        </div>
+                    </div>
+                    <div class="setting-row">
+                        <label>Manual Stop</label>
+                        <label class="toggle"><input type="checkbox" id="setManualStop"><span
+                                class="toggle-slider"></span></label>
+                    </div>
+                    <div class="setting-row">
+                        <label>Random Initial Angle</label>
+                        <label class="toggle"><input type="checkbox" id="setRandomAngle" checked><span
+                                class="toggle-slider"></span></label>
+                    </div>
+                </div>
+
+                <!-- Confetti & Sound -->
+                <div class="settings-section">
+                    <h3 class="settings-section-title">Effects</h3>
+                    <div class="setting-row">
+                        <label>Confetti</label>
+                        <label class="toggle"><input type="checkbox" id="setConfetti" checked><span
+                                class="toggle-slider"></span></label>
+                    </div>
+                    <div class="setting-row">
+                        <label>Sound</label>
+                        <label class="toggle"><input type="checkbox" id="setSound" checked><span
+                                class="toggle-slider"></span></label>
+                    </div>
+                </div>
+
+                <!-- Tool Colors -->
+                <div class="settings-section">
+                    <h3 class="settings-section-title">Color Theme</h3>
+                    <div class="theme-grid" id="themeGrid">
+                        <button class="theme-swatch active" data-theme="vivid" title="Vivid"><span
+                                style="background:linear-gradient(135deg,#8B5CF6,#EC4899)"></span></button>
+                        <button class="theme-swatch" data-theme="ocean" title="Ocean"><span
+                                style="background:linear-gradient(135deg,#0EA5E9,#06B6D4)"></span></button>
+                        <button class="theme-swatch" data-theme="sunset" title="Sunset"><span
+                                style="background:linear-gradient(135deg,#F97316,#EF4444)"></span></button>
+                        <button class="theme-swatch" data-theme="forest" title="Forest"><span
+                                style="background:linear-gradient(135deg,#10B981,#34D399)"></span></button>
+                        <button class="theme-swatch" data-theme="candy" title="Candy"><span
+                                style="background:linear-gradient(135deg,#F472B6,#A78BFA)"></span></button>
+                        <button class="theme-swatch" data-theme="neon" title="Neon"><span
+                                style="background:linear-gradient(135deg,#22D3EE,#A855F7)"></span></button>
+                        <button class="theme-swatch" data-theme="earth" title="Earth"><span
+                                style="background:linear-gradient(135deg,#92400E,#B45309)"></span></button>
+                        <button class="theme-swatch" data-theme="pastel" title="Pastel"><span
+                                style="background:linear-gradient(135deg,#FCA5A5,#93C5FD)"></span></button>
+                        <button class="theme-swatch" data-theme="mono" title="Mono"><span
+                                style="background:linear-gradient(135deg,#475569,#94A3B8)"></span></button>
+                    </div>
+                </div>
+
+                <!-- Background Color -->
+                <div class="settings-section">
+                    <h3 class="settings-section-title">Background</h3>
+                    <div class="setting-row">
+                        <label>Background Color</label>
+                        <input type="color" id="setBgColor" value="#0a0a1a" class="color-input">
+                    </div>
+                </div>
+
+                <!-- Reset Button -->
+                <div class="settings-reset">
+                    <button class="btn btn-ghost btn-sm" id="btnResetSettings">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+                            <path d="M3 3v5h5" />
+                        </svg>
+                        Reset to Defaults
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════ TITLE EDIT MODAL ═══════ -->
+    <div class="modal-overlay" id="titleModal">
+        <div class="modal title-modal">
+            <div class="modal-header">
+                <h2 class="modal-title">✏️ Edit Title &amp; Description</h2>
+                <button class="btn-close" id="btnCloseTitleModal">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Tool Title</label>
+                    <input type="text" id="inputTitle" class="form-input" placeholder="SpinWheel" maxlength="60">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <input type="text" id="inputDesc" class="form-input"
+                        placeholder="Spin the wheel to pick a random result!" maxlength="120">
+                </div>
+                <div class="form-group">
+                    <label>Result Popup Title(s) <small class="text-muted">(one per line, cycles each
+                            spin)</small></label>
+                    <textarea id="inputResultTitles" class="form-textarea" rows="3" placeholder="🎉 Winner!"></textarea>
+                </div>
+                <button class="btn btn-primary" id="btnSaveTitles" style="align-self:flex-end;">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════ MYSTERY RESULT OVERLAY ═══════ -->
+    <div class="mystery-reveal-overlay" id="mysteryReveal">
+        <div class="mystery-reveal-card">
+            <div class="mystery-q">?</div>
+            <p>Click or press Enter to reveal the result</p>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
